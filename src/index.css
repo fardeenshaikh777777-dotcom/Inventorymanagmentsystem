@@ -1,1 +1,202 @@
 @import "tailwindcss";
+
+@theme {
+  --color-paper: #f6f7f9;
+  --color-surface: #ffffff;
+  --color-ink: #1b222b;
+  --color-mut: #5b6572;
+  --color-faint: #8a94a1;
+  --color-line: #e3e6ea;
+  --color-linedark: #d3d8de;
+  --color-sig: #2c5aa0;
+  --color-sigdark: #234c88;
+  --color-sigwash: #eaf0f8;
+  --color-ok: #1f8a5f;
+  --color-okwash: #e8f4ee;
+  --color-warn: #e0982a;
+  --color-warnwash: #fbf3e2;
+  --color-crit: #c4432e;
+  --color-critwash: #f9eae7;
+  --color-rail: #1e242d;
+  --color-rail2: #2a323d;
+  --color-railtext: #9aa5b1;
+
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: rgba(44, 90, 160, 0.18);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-sig);
+  outline-offset: 1px;
+  border-radius: 3px;
+}
+
+/* ---------- reusable type + surface helpers ---------- */
+
+.mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+.kbd {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  line-height: 1;
+  color: var(--color-mut);
+  background: var(--color-paper);
+  border: 1px solid var(--color-line);
+  border-bottom-width: 2px;
+  border-radius: 3px;
+  padding: 2px 4px;
+}
+
+.canvas-bg {
+  background-image: linear-gradient(to right, rgba(27, 34, 43, 0.028) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(27, 34, 43, 0.028) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: 6px;
+  box-shadow: 0 1px 2px rgba(27, 34, 43, 0.04);
+}
+
+.scroll-thin::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.scroll-thin::-webkit-scrollbar-thumb {
+  background: var(--color-linedark);
+  border-radius: 4px;
+}
+.scroll-thin::-webkit-scrollbar-thumb:hover {
+  background: #b9c0c9;
+}
+.scroll-thin {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-linedark) transparent;
+}
+
+/* ---------- motion (always purposeful) ---------- */
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.anim-rise {
+  animation: rise 0.26s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+}
+
+@keyframes flashrow {
+  0% {
+    background-color: rgba(44, 90, 160, 0.16);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+.row-flash {
+  animation: flashrow 1.2s ease-out both;
+}
+
+@keyframes toastin {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+}
+.anim-toast {
+  animation: toastin 0.22s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+}
+
+@keyframes panelin {
+  from {
+    transform: translateX(28px);
+    opacity: 0;
+  }
+}
+.anim-panel {
+  animation: panelin 0.28s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+}
+
+@keyframes shimmer {
+  from {
+    background-position: -420px 0;
+  }
+  to {
+    background-position: 420px 0;
+  }
+}
+.skel {
+  background: linear-gradient(90deg, #eef0f3 25%, #f7f8fa 50%, #eef0f3 75%);
+  background-size: 840px 100%;
+  animation: shimmer 1.3s linear infinite;
+  border-radius: 3px;
+}
+
+@keyframes ledpulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+.led {
+  animation: ledpulse 2.4s ease-in-out infinite;
+}
+
+@keyframes scanmove {
+  0% {
+    top: 10%;
+  }
+  50% {
+    top: 86%;
+  }
+  100% {
+    top: 10%;
+  }
+}
+.scanline {
+  animation: scanmove 1.7s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
